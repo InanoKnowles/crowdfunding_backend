@@ -17,7 +17,7 @@ class FundraiserList(APIView):
     def post(self, request):
         serializer = FundraiserSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(owner=request.user)
             return Response(
                 serializer.data,
             status=status.HTTP_201_CREATED
@@ -42,14 +42,14 @@ class FundraiserDetail(APIView):
     
 class PledgeList(APIView):
     def get(self, request):
-        pledge = Pledge.objects.all()
-        serializer = PledgeSerializer(pledge, many=True)
+        pledges = Pledge.objects.all()
+        serializer = PledgeSerializer(pledges, many=True)
         return Response(serializer.data)
     
     def post(self, request):
         serializer = PledgeSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(supporter=request.user)
             return Response(
                 serializer.data,
                 status=status.HTTP_201_CREATED
