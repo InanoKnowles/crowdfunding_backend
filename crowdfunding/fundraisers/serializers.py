@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from django.apps import apps
 
+#----------------|Pledges|----------------#
+
 class PledgeSerializer(serializers.ModelSerializer):
     supporter = serializers.ReadOnlyField(source='supporter.id')
     class Meta:
@@ -14,6 +16,8 @@ class PledgeSerializer(serializers.ModelSerializer):
         instance.anonymous = validated_data.get('anonymous', instance.anonymous)
         instance.fundraiser = validated_data.get('fundraiser', instance.fundraiser)
         return instance
+
+#----------------|Fundraisers|----------------#
 
 class FundraiserSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.id')
